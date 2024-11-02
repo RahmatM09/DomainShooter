@@ -3,7 +3,6 @@
 
 #include "TestActor.h"
 
-// Sets default values
 ATestActor::ATestActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -13,17 +12,16 @@ ATestActor::ATestActor()
 	RootComponent = TestActorStaticMeshComponent;
 }
 
-// Called when the game starts or when spawned
 void ATestActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
-// Called every frame
 void ATestActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	/// Test...
 }
 
