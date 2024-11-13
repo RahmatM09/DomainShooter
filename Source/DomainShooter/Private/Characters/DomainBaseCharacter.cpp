@@ -6,6 +6,7 @@
 #include "InputMappingContext.h"
 #include "EnhancedInputComponent.h"
 #include "InputAction.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ADomainBaseCharacter::ADomainBaseCharacter()
 {
@@ -40,10 +41,20 @@ void ADomainBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
-	EnhancedInputComponent->BindAction(IA_MoveForward, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::MoveForward);
+	EnhancedInputComponent->BindAction(IA_BaseCharacterMovement, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::BaseCharacterMovement);
 }
 
-void ADomainBaseCharacter::MoveForward(const FInputActionValue& InputActionValue)
+void ADomainBaseCharacter::BaseCharacterMovement(const FInputActionValue& InputActionValue)
 {
+	FVector2D MovementVector = InputActionValue.Get<FVector2D>();
 
+	if (Controller)
+	{
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FVector ForwardDirection = UKismetMathLibrary::GetForwardVector(Rotation);
+		const FVector RightDirection = UKismetMathLibrary::GetRightVector(Rotation);
+
+		AddMovementInput(ForwardDirection, MovementVector.X);
+		AddMovementInput(RightDirection, MovementVector.Y);
+	}
 }

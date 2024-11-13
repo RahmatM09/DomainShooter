@@ -34,10 +34,10 @@ private:
 	TObjectPtr<UInputMappingContext> BaseCharacterIMC;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputAction> IA_MoveForward;
+	TObjectPtr<UInputAction> IA_BaseCharacterMovement;
 
 	/// Input Functions ***********************************************
-	void MoveForward(const FInputActionValue& InputActionValue);
+	void BaseCharacterMovement(const FInputActionValue& InputActionValue);
 
 public:	
 	//Setters And Getters
