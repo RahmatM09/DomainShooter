@@ -50,6 +50,7 @@ void ADomainBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
 	EnhancedInputComponent->BindAction(IA_BaseCharacterMovement, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::BaseCharacterMovement);
+	EnhancedInputComponent->BindAction(IA_BaseCharacterLookAround, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::BaseCharacterLookAround);
 }
 
 void ADomainBaseCharacter::BaseCharacterMovement(const FInputActionValue& InputActionValue)
@@ -64,5 +65,16 @@ void ADomainBaseCharacter::BaseCharacterMovement(const FInputActionValue& InputA
 
 		AddMovementInput(ForwardDirection, MovementVector.X);
 		AddMovementInput(RightDirection, MovementVector.Y);
+	}
+}
+
+void ADomainBaseCharacter::BaseCharacterLookAround(const FInputActionValue& InputActionValue)
+{
+	FVector2D LookAroundValue = InputActionValue.Get<FVector2D>();
+
+	if (Controller)
+	{
+		AddControllerYawInput(LookAroundValue.X);
+		AddControllerPitchInput(LookAroundValue.Y * -1.f);
 	}
 }

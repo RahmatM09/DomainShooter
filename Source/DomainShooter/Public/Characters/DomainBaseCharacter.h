@@ -43,8 +43,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> IA_BaseCharacterMovement;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> IA_BaseCharacterLookAround;
+
 	/// Input Functions ***********************************************
 	void BaseCharacterMovement(const FInputActionValue& InputActionValue);
+	void BaseCharacterLookAround(const FInputActionValue& InputActionValue);
 
 
 
