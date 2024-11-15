@@ -35,7 +35,7 @@ void ADomainBaseCharacter::BeginPlay()
 		check(Subsystem);
 		Subsystem->AddMappingContext(BaseCharacterIMC, 0);
 	}
-
+	
 }
 
 void ADomainBaseCharacter::Tick(float DeltaTime)
