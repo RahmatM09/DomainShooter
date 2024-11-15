@@ -52,6 +52,7 @@ void ADomainBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	EnhancedInputComponent->BindAction(IA_BaseCharacterMovement, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::BaseCharacterMovement);
 	EnhancedInputComponent->BindAction(IA_BaseCharacterLookAround, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::BaseCharacterLookAround);
 	EnhancedInputComponent->BindAction(IA_BaseCharacterJump, ETriggerEvent::Started, this, &ADomainBaseCharacter::BaseCharacterJump);
+	EnhancedInputComponent->BindAction(IA_PickupWeapon, ETriggerEvent::Started, this, &ADomainBaseCharacter::PickupWeapon);
 }
 
 void ADomainBaseCharacter::BaseCharacterMovement(const FInputActionValue& InputActionValue)
@@ -83,4 +84,12 @@ void ADomainBaseCharacter::BaseCharacterLookAround(const FInputActionValue& Inpu
 void ADomainBaseCharacter::BaseCharacterJump(const FInputActionValue& InputActionValue)
 {
 	Jump();
+}
+
+void ADomainBaseCharacter::PickupWeapon(const FInputActionValue& InputActionValue)
+{
+	if (bCanPickup)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Pickup Weapon"));
+	}
 }

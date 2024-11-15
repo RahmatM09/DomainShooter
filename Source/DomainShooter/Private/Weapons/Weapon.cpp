@@ -4,6 +4,7 @@
 #include "Weapons/Weapon.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "DomainShooter/Public/Characters/DomainBaseCharacter.h"
 
 AWeapon::AWeapon()
 {
@@ -36,10 +37,21 @@ void AWeapon::Tick(float DeltaTime)
 
 void AWeapon::OnComponentOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Error, TEXT("Something Entered!"));
+	ADomainBaseCharacter* BaseCharacter = Cast<ADomainBaseCharacter>(OtherActor);
+	if (BaseCharacter)
+	{
+		BaseCharacter->SetCanPickup(true);
+		UE_LOG(LogTemp, Error, TEXT("You can Pickup"));
+	}
 }
 
 void AWeapon::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Error, TEXT("Something Exited!"));
+	ADomainBaseCharacter* BaseCharacter = Cast<ADomainBaseCharacter>(OtherActor);
+	if (BaseCharacter)
+	{
+		BaseCharacter->SetCanPickup(false);
+		UE_LOG(LogTemp, Error, TEXT("You can't Pickup"));
+	}
+	
 }
