@@ -9,6 +9,8 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "DomainShooter/Public/Weapons/Weapon.h"
+#include "Components/SphereComponent.h"
 
 ADomainBaseCharacter::ADomainBaseCharacter()
 {
@@ -88,8 +90,11 @@ void ADomainBaseCharacter::BaseCharacterJump(const FInputActionValue& InputActio
 
 void ADomainBaseCharacter::PickupWeapon(const FInputActionValue& InputActionValue)
 {
-	if (bCanPickup)
+	if (bCanPickup && Weapon)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Pickup Weapon"));
+		Weapon->CollisionSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
+		Weapon->SetActorRelativeLocation(FVector(0.f, 0.f, 0.f));
+		Weapon->SetActorRelativeRotation(FRotator(0.0, 0.0, 0.0));
 	}
 }

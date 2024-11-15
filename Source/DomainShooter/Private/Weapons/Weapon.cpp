@@ -41,6 +41,7 @@ void AWeapon::OnComponentOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	if (BaseCharacter)
 	{
 		BaseCharacter->SetCanPickup(true);
+		BaseCharacter->SetWeapon(this);
 		UE_LOG(LogTemp, Error, TEXT("You can Pickup"));
 	}
 }

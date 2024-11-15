@@ -12,6 +12,7 @@ class UInputAction;
 struct FInputActionValue;
 class USpringArmComponent;
 class UCameraComponent;
+class AWeapon;
 
 UCLASS()
 class DOMAINSHOOTER_API ADomainBaseCharacter : public ACharacter
@@ -60,9 +61,12 @@ private:
 
 	// Weapon Variable ************************************************
 	bool bCanPickup = false;
+	UPROPERTY()
+	TObjectPtr<AWeapon> Weapon;
 
 public:	
 	//Setters And Getters
 	FORCEINLINE void SetCanPickup(bool NewPickup) { bCanPickup = NewPickup; }
+	FORCEINLINE void SetWeapon(AWeapon* NewWeapon) { Weapon = NewWeapon; }
 
 };
