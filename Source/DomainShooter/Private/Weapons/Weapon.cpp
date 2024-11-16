@@ -61,5 +61,9 @@ void AWeapon::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AA
 
 void AWeapon::WeaponShoot()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Shoot"));
+	UAnimInstance* AnimInstance = WeaponMesh->GetAnimInstance();
+	if (AnimInstance && FireMontage)
+	{
+		AnimInstance->Montage_Play(FireMontage);
+	}
 }

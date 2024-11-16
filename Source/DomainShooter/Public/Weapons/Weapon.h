@@ -43,4 +43,7 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<USceneComponent> ProjectileLocation;
 
+	// Animations *****************************************************
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	TObjectPtr<UAnimMontage> FireMontage;
 };
