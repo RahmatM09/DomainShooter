@@ -53,11 +53,15 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> IA_PickupWeapon;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> IA_Shoot;
+
 	/// Input Functions ***********************************************
 	void BaseCharacterMovement(const FInputActionValue& InputActionValue);
 	void BaseCharacterLookAround(const FInputActionValue& InputActionValue);
 	void BaseCharacterJump(const FInputActionValue& InputActionValue);
 	void PickupWeapon(const FInputActionValue& InputActionValue);
+	void CharacterShoot(const FInputActionValue& InputActionValue);
 
 	// Weapon Variable ************************************************
 	bool bCanPickup = false;

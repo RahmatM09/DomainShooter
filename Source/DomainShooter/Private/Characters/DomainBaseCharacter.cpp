@@ -55,6 +55,7 @@ void ADomainBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	EnhancedInputComponent->BindAction(IA_BaseCharacterLookAround, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::BaseCharacterLookAround);
 	EnhancedInputComponent->BindAction(IA_BaseCharacterJump, ETriggerEvent::Started, this, &ADomainBaseCharacter::BaseCharacterJump);
 	EnhancedInputComponent->BindAction(IA_PickupWeapon, ETriggerEvent::Started, this, &ADomainBaseCharacter::PickupWeapon);
+	EnhancedInputComponent->BindAction(IA_Shoot, ETriggerEvent::Started, this, &ADomainBaseCharacter::CharacterShoot);
 }
 
 void ADomainBaseCharacter::BaseCharacterMovement(const FInputActionValue& InputActionValue)
@@ -97,5 +98,13 @@ void ADomainBaseCharacter::PickupWeapon(const FInputActionValue& InputActionValu
 		Weapon->SetActorRelativeLocation(FVector(0.f, 0.f, 0.f));
 		Weapon->SetActorRelativeRotation(FRotator(0.0, 0.0, 0.0));
 		bHasRifle = true;
+	}
+}
+
+void ADomainBaseCharacter::CharacterShoot(const FInputActionValue& InputActionValue)
+{
+	if (Weapon && bHasRifle)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Shoot"));
 	}
 }
