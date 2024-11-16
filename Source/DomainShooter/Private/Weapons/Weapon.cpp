@@ -19,6 +19,8 @@ AWeapon::AWeapon()
 	WeaponMesh->SetupAttachment(CollisionSphere);
 	WeaponMesh->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
 	
+	ProjectileLocation = CreateDefaultSubobject<USceneComponent>("ProjectileLocation");
+	ProjectileLocation->SetupAttachment(WeaponMesh);
 }
 
 void AWeapon::BeginPlay()
@@ -55,4 +57,9 @@ void AWeapon::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AA
 		UE_LOG(LogTemp, Error, TEXT("You can't Pickup"));
 	}
 	
+}
+
+void AWeapon::WeaponShoot()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Shoot"));
 }

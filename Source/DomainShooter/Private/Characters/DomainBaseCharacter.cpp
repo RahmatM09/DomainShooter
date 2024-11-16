@@ -110,5 +110,6 @@ void ADomainBaseCharacter::CharacterShoot(const FInputActionValue& InputActionVa
 		{
 			AnimInstance->Montage_Play(FireMontage);
 		}
+		Weapon->WeaponShoot();
 	}
 }
