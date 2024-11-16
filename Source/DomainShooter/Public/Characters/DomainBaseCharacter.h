@@ -71,6 +71,10 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bHasRifle = false;
 
+	// Animations *****************************************************
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	TObjectPtr<UAnimMontage> FireMontage;
+
 public:	
 	//Setters And Getters
 	FORCEINLINE void SetCanPickup(bool NewPickup) { bCanPickup = NewPickup; }

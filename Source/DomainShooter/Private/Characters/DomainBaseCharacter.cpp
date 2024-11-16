@@ -105,6 +105,10 @@ void ADomainBaseCharacter::CharacterShoot(const FInputActionValue& InputActionVa
 {
 	if (Weapon && bHasRifle)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Shoot"));
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		if (AnimInstance && FireMontage)
+		{
+			AnimInstance->Montage_Play(FireMontage);
+		}
 	}
 }
