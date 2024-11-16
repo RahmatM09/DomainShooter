@@ -22,7 +22,7 @@ ADomainBaseCharacter::ADomainBaseCharacter()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(BaseSpringArm);
-
+	
 }
 
 void ADomainBaseCharacter::BeginPlay()
