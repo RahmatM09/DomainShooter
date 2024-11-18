@@ -59,6 +59,13 @@ void ADomainBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	EnhancedInputComponent->BindAction(IA_Shoot, ETriggerEvent::Started, this, &ADomainBaseCharacter::CharacterShoot);
 }
 
+float ADomainBaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Damage: %f"), DamageAmount);
+
+	return DamageAmount;
+}
+
 void ADomainBaseCharacter::BaseCharacterMovement(const FInputActionValue& InputActionValue)
 {
 	FVector2D MovementVector = InputActionValue.Get<FVector2D>();
