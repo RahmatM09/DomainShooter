@@ -61,7 +61,21 @@ void ADomainBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 float ADomainBaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Damage: %f"), DamageAmount);
+	
+	CurrentHealth -= DamageAmount;
+
+	CurrentHealth = FMath::Clamp(CurrentHealth, 0.f, MaxHealth);
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && HitMontage)
+	{
+		AnimInstance->Montage_Play(HitMontage);
+	}
+
+	if (CurrentHealth <= 0.f)
+	{
+		bIsDead = true;
+	}
 
 	return DamageAmount;
 }

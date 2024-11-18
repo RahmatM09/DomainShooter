@@ -79,11 +79,24 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Animations")
 	TObjectPtr<UAnimMontage> FireMontage;
 
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	TObjectPtr<UAnimMontage> HitMontage;
+
 	// UI *************************************************************
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UUserWidget> CharacterUI;
 
 	TObjectPtr<UUserWidget> UIWidget;
+
+	// Health ********************************************************
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+	float MaxHealth = 100.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+	float CurrentHealth = 100.f;
+
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	bool bIsDead = false;
 
 public:	
 	//Setters And Getters
