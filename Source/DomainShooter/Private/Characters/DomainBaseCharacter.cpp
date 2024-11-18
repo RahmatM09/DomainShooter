@@ -108,6 +108,7 @@ void ADomainBaseCharacter::PickupWeapon(const FInputActionValue& InputActionValu
 				UIWidget->AddToViewport();
 			}
 		}
+		Weapon->SetOwner(this);
 	}
 }
 

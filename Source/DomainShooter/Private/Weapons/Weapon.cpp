@@ -23,7 +23,6 @@ AWeapon::AWeapon()
 	ProjectileLocation = CreateDefaultSubobject<USceneComponent>("ProjectileLocation");
 	ProjectileLocation->SetupAttachment(WeaponMesh);
 
-
 }
 
 void AWeapon::BeginPlay()
@@ -59,21 +58,39 @@ void AWeapon::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AA
 		BaseCharacter->SetCanPickup(false);
 		UE_LOG(LogTemp, Error, TEXT("You can't Pickup"));
 	}
-	
 }
 
 void AWeapon::WeaponShoot()
 {
 	UAnimInstance* AnimInstance = WeaponMesh->GetAnimInstance();
-	if (AnimInstance && FireMontage && Projectile)
+	UWorld* World = GetWorld();
+	if (AnimInstance && FireMontage && Projectile && World)
 	{
-		AnimInstance->Montage_Play(FireMontage);
-		if (UWorld* World = GetWorld())
-		{
-			FVector Location = ProjectileLocation->GetComponentLocation();
-			FRotator Rotation = ProjectileLocation->GetComponentRotation();
+	AnimInstance->Montage_Play(FireMontage);
 
-			World->SpawnActor<AProjectile>(Projectile, Location, Rotation);
-		}
+		FVector Location = ProjectileLocation->GetComponentLocation();
+		FRotator Rotation = ProjectileLocation->GetComponentRotation();
+		
+		ADomainBaseCharacter* BaseCharacter = Cast<ADomainBaseCharacter>(GetOwner());
+		if (BaseCharacter)
+		{
+			if (APlayerController* PlayerController = Cast<APlayerController>(BaseCharacter->GetController()))
+			{
+				FVector PlayerViewLocation;
+				FRotator PlayerViewRotation;
+				PlayerController->GetPlayerViewPoint(PlayerViewLocation, PlayerViewRotation);
+
+				FVector EndLocation = PlayerViewLocation + (PlayerViewRotation.Vector() * TargetDistance);
+
+				FHitResult Hit;
+				if (World->LineTraceSingleByChannel(Hit, PlayerViewLocation, EndLocation, ECollisionChannel::ECC_Visibility))
+				{
+					FVector HitLocation = Hit.ImpactPoint;
+
+					DrawDebugLine(World, PlayerViewLocation, HitLocation, FColor::Red, false, 90.f);
+				}
+			}		
+		}	
+		World->SpawnActor<AProjectile>(Projectile, Location, Rotation);
 	}
 }

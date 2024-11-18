@@ -50,4 +50,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Projectile")
 	TSubclassOf<AProjectile> Projectile;
+
+	UPROPERTY(EditAnywhere, Category = "Projectile")
+	float TargetDistance = 5000.f;
 };
