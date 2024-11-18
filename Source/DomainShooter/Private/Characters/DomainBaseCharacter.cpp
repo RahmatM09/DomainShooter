@@ -11,6 +11,7 @@
 #include "Camera/CameraComponent.h"
 #include "DomainShooter/Public/Weapons/Weapon.h"
 #include "Components/SphereComponent.h"
+#include "Blueprint/UserWidget.h"
 
 ADomainBaseCharacter::ADomainBaseCharacter()
 {
@@ -98,6 +99,15 @@ void ADomainBaseCharacter::PickupWeapon(const FInputActionValue& InputActionValu
 		Weapon->SetActorRelativeLocation(FVector(0.f, 0.f, 0.f));
 		Weapon->SetActorRelativeRotation(FRotator(0.0, 0.0, 0.0));
 		bHasRifle = true;
+
+		if (CharacterUI)
+		{
+			UIWidget = CreateWidget<UUserWidget>(GetWorld(), CharacterUI);
+			if (UIWidget)
+			{
+				UIWidget->AddToViewport();
+			}
+		}
 	}
 }
 

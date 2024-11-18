@@ -13,6 +13,7 @@ struct FInputActionValue;
 class USpringArmComponent;
 class UCameraComponent;
 class AWeapon;
+class UUserWidget;
 
 UCLASS()
 class DOMAINSHOOTER_API ADomainBaseCharacter : public ACharacter
@@ -74,6 +75,12 @@ private:
 	// Animations *****************************************************
 	UPROPERTY(EditAnywhere, Category = "Animations")
 	TObjectPtr<UAnimMontage> FireMontage;
+
+	// UI *************************************************************
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UUserWidget> CharacterUI;
+
+	TObjectPtr<UUserWidget> UIWidget;
 
 public:	
 	//Setters And Getters
