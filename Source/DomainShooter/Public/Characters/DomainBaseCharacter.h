@@ -98,6 +98,15 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsDead = false;
 
+	// Death Timer *********************************************************
+	FTimerHandle DeathTimerHandle;
+
+	UFUNCTION()
+	void DestroyActor();
+
+	UPROPERTY(EditAnywhere, Category = "DeathTimer")
+	float DestroyTime = 10.f;
+
 public:	
 	//Setters And Getters
 	FORCEINLINE void SetCanPickup(bool NewPickup) { bCanPickup = NewPickup; }

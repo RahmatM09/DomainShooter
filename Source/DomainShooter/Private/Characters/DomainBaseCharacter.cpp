@@ -12,6 +12,7 @@
 #include "DomainShooter/Public/Weapons/Weapon.h"
 #include "Components/SphereComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/CapsuleComponent.h"
 
 ADomainBaseCharacter::ADomainBaseCharacter()
 {
@@ -75,6 +76,22 @@ float ADomainBaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& D
 	if (CurrentHealth <= 0.f)
 	{
 		bIsDead = true;
+
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		
+		if (Controller)
+		{
+			Controller->SetIgnoreMoveInput(true);
+			Controller->SetIgnoreLookInput(true);
+		}
+
+		GetMesh()->SetSimulatePhysics(true);
+		GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
+
+		if (UWorld* World = GetWorld())
+		{
+			World->GetTimerManager().SetTimer(DeathTimerHandle, this, &ADomainBaseCharacter::DestroyActor, DestroyTime, false);
+		}
 	}
 
 	return DamageAmount;
@@ -144,4 +161,9 @@ void ADomainBaseCharacter::CharacterShoot(const FInputActionValue& InputActionVa
 		}
 		Weapon->WeaponShoot();
 	}
+}
+
+void ADomainBaseCharacter::DestroyActor()
+{
+	Destroy();
 }
