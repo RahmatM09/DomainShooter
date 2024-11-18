@@ -20,7 +20,10 @@ public:
 	AProjectile();
 
 protected:
-	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	virtual void BeginPlay() override;
 
 private:	
 	// Components *******************************
@@ -32,5 +35,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
+
+	// Variables **********************************
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TObjectPtr<UParticleSystem> ImpactParticle;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TObjectPtr<USoundBase> ImpactSound;
 
 };

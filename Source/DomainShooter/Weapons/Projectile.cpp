@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AProjectile::AProjectile()
 {
@@ -13,6 +14,7 @@ AProjectile::AProjectile()
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
 	RootComponent = SphereCollision;
 	SphereCollision->SetSphereRadius(10.f);
+	SphereCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
 
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMesh"));
 	ProjectileMesh->SetupAttachment(SphereCollision);
@@ -24,7 +26,27 @@ AProjectile::AProjectile()
 	ProjectileMovement->bShouldBounce = false;
 
 	InitialLifeSpan = 5.f;
+
 }
 
+void AProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SphereCollision->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+
+}
+
+
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UWorld* World = GetWorld();
+	if (World && ImpactParticle && ImpactSound)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(World, ImpactParticle, GetActorTransform());
+		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
+	}
+	Destroy();
+}
 
 
