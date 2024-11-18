@@ -6,6 +6,8 @@
 #include "Components/SphereComponent.h"
 #include "DomainShooter/Public/Characters/DomainBaseCharacter.h"
 #include "DomainShooter/Weapons/Projectile.h"
+#include "Kismet/KismetMathLibrary.h"
+
 
 AWeapon::AWeapon()
 {
@@ -66,7 +68,7 @@ void AWeapon::WeaponShoot()
 	UWorld* World = GetWorld();
 	if (AnimInstance && FireMontage && Projectile && World)
 	{
-	AnimInstance->Montage_Play(FireMontage);
+		AnimInstance->Montage_Play(FireMontage);
 
 		FVector Location = ProjectileLocation->GetComponentLocation();
 		FRotator Rotation = ProjectileLocation->GetComponentRotation();
@@ -79,18 +81,16 @@ void AWeapon::WeaponShoot()
 				FVector PlayerViewLocation;
 				FRotator PlayerViewRotation;
 				PlayerController->GetPlayerViewPoint(PlayerViewLocation, PlayerViewRotation);
-
 				FVector EndLocation = PlayerViewLocation + (PlayerViewRotation.Vector() * TargetDistance);
 
 				FHitResult Hit;
 				if (World->LineTraceSingleByChannel(Hit, PlayerViewLocation, EndLocation, ECollisionChannel::ECC_Visibility))
 				{
 					FVector HitLocation = Hit.ImpactPoint;
-
-					DrawDebugLine(World, PlayerViewLocation, HitLocation, FColor::Red, false, 90.f);
+					FRotator TaragetRotation = UKismetMathLibrary::FindLookAtRotation(Location, HitLocation);
+					World->SpawnActor<AProjectile>(Projectile, Location, TaragetRotation);
 				}
 			}		
 		}	
-		World->SpawnActor<AProjectile>(Projectile, Location, Rotation);
 	}
 }
