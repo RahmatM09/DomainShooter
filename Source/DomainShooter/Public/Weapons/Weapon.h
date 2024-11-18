@@ -9,6 +9,7 @@
 // Forward Declare
 class USkeletalMeshComponent;
 class USphereComponent;
+class AProjectile;
 
 UCLASS()
 class DOMAINSHOOTER_API AWeapon : public AActor
@@ -46,4 +47,7 @@ private:
 	// Animations *****************************************************
 	UPROPERTY(EditAnywhere, Category = "Animations")
 	TObjectPtr<UAnimMontage> FireMontage;
+
+	UPROPERTY(EditAnywhere, Category = "Projectile")
+	TSubclassOf<AProjectile> Projectile;
 };

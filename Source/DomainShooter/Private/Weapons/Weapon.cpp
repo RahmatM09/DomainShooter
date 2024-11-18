@@ -5,6 +5,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/SphereComponent.h"
 #include "DomainShooter/Public/Characters/DomainBaseCharacter.h"
+#include "DomainShooter/Weapons/Projectile.h"
 
 AWeapon::AWeapon()
 {
@@ -21,6 +22,8 @@ AWeapon::AWeapon()
 	
 	ProjectileLocation = CreateDefaultSubobject<USceneComponent>("ProjectileLocation");
 	ProjectileLocation->SetupAttachment(WeaponMesh);
+
+
 }
 
 void AWeapon::BeginPlay()
@@ -62,8 +65,15 @@ void AWeapon::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AA
 void AWeapon::WeaponShoot()
 {
 	UAnimInstance* AnimInstance = WeaponMesh->GetAnimInstance();
-	if (AnimInstance && FireMontage)
+	if (AnimInstance && FireMontage && Projectile)
 	{
 		AnimInstance->Montage_Play(FireMontage);
+		if (UWorld* World = GetWorld())
+		{
+			FVector Location = ProjectileLocation->GetComponentLocation();
+			FRotator Rotation = ProjectileLocation->GetComponentRotation();
+
+			World->SpawnActor<AProjectile>(Projectile, Location, Rotation);
+		}
 	}
 }
