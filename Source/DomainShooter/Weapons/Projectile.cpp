@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "DomainShooter/Public/Characters/DomainBaseCharacter.h"
 
 AProjectile::AProjectile()
 {
@@ -46,6 +47,12 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 		UGameplayStatics::SpawnEmitterAtLocation(World, ImpactParticle, GetActorTransform());
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
 	}
+
+	if (OtherActor->IsA<ADomainBaseCharacter>())
+	{
+		UGameplayStatics::ApplyDamage(OtherActor, BaseDamage, GetInstigatorController(), this, UDamageType::StaticClass());
+	}
+
 	Destroy();
 }
 

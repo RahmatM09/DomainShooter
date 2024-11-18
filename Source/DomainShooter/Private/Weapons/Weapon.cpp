@@ -88,7 +88,10 @@ void AWeapon::WeaponShoot()
 				{
 					FVector HitLocation = Hit.ImpactPoint;
 					FRotator TaragetRotation = UKismetMathLibrary::FindLookAtRotation(Location, HitLocation);
-					World->SpawnActor<AProjectile>(Projectile, Location, TaragetRotation);
+					FActorSpawnParameters SpawnParams;
+					SpawnParams.Instigator = Cast<APawn>(GetOwner());
+					SpawnParams.Owner = this;
+					World->SpawnActor<AProjectile>(Projectile, Location, TaragetRotation, SpawnParams);
 				}
 			}		
 		}	

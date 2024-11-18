@@ -43,4 +43,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Effects")
 	TObjectPtr<USoundBase> ImpactSound;
 
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	float BaseDamage = 20.f;
+
 };
