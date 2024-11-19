@@ -32,41 +32,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-
-private:
-	/// Components ***************************************************
-	UPROPERTY(VisibleAnywhere, Category = "Camera")
-	TObjectPtr<USpringArmComponent> BaseSpringArm;
-
-	UPROPERTY(VisibleAnywhere, Category = "Camera")
-	TObjectPtr<UCameraComponent> Camera;
-
-	/// Input ********************************************************
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputMappingContext> BaseCharacterIMC;
-
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputAction> IA_BaseCharacterMovement;
-
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputAction> IA_BaseCharacterLookAround;
-
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputAction> IA_BaseCharacterJump;
-
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputAction> IA_PickupWeapon;
-
-	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputAction> IA_Shoot;
-
-	/// Input Functions ***********************************************
-	void BaseCharacterMovement(const FInputActionValue& InputActionValue);
-	void BaseCharacterLookAround(const FInputActionValue& InputActionValue);
-	void BaseCharacterJump(const FInputActionValue& InputActionValue);
-	void PickupWeapon(const FInputActionValue& InputActionValue);
-	void CharacterShoot(const FInputActionValue& InputActionValue);
-
 	// Weapon Variable ************************************************
 	bool bCanPickup = false;
 	UPROPERTY()
@@ -82,12 +47,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Animations")
 	TObjectPtr<UAnimMontage> HitMontage;
 
-	// UI *************************************************************
-	UPROPERTY(EditAnywhere, Category = "UI")
-	TSubclassOf<UUserWidget> CharacterUI;
-
-	TObjectPtr<UUserWidget> UIWidget;
-
 	// Health ********************************************************
 	UPROPERTY(VisibleAnywhere, Category = "Health")
 	float MaxHealth = 100.f;
@@ -98,6 +57,7 @@ private:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsDead = false;
 
+private:
 	// Death Timer *********************************************************
 	FTimerHandle DeathTimerHandle;
 
