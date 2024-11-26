@@ -121,11 +121,6 @@ void ADomainPlayerCharacter::CharacterShoot(const FInputActionValue& InputAction
 {
 	if (Weapon && bHasRifle)
 	{
-		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-		if (AnimInstance && FireMontage)
-		{
-			AnimInstance->Montage_Play(FireMontage);
-		}
-		Weapon->WeaponShoot();
+		Shoot(Weapon);
 	}
 }

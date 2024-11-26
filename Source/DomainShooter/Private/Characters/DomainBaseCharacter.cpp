@@ -78,6 +78,20 @@ void ADomainBaseCharacter::PickWeapon(AWeapon* WeaponToPick)
 	WeaponToPick->SetOwner(this);
 }
 
+void ADomainBaseCharacter::Shoot(AWeapon* WeaponToShoot)
+{
+	if (WeaponToShoot)
+	{
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		if (AnimInstance && FireMontage)
+		{
+			AnimInstance->Montage_Play(FireMontage);
+		}
+		Weapon->WeaponShoot();
+	}
+	
+}
+
 void ADomainBaseCharacter::DestroyActor()
 {
 	Destroy();

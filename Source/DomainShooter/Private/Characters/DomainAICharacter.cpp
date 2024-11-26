@@ -15,6 +15,7 @@ void ADomainAICharacter::BeginPlay()
 			Weapon = World->SpawnActor<AWeapon>(WeaponClass);
 			PickWeapon(Weapon);
 			Weapon->SetActorRelativeRotation(FRotator(0.f, 90.f, 0.f));
+			Shoot(Weapon);
 		}
 	}
 }

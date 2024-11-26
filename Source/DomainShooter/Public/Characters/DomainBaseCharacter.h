@@ -59,6 +59,7 @@ protected:
 
 	// Weapon Functions **********************************************
 	void PickWeapon(AWeapon* WeaponToPick);
+	void Shoot(AWeapon* WeaponToShoot);
 
 private:
 	// Death Timer *********************************************************
