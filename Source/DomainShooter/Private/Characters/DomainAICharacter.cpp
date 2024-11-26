@@ -8,13 +8,13 @@ void ADomainAICharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (Weapon)
+	if (WeaponClass)
 	{
 		if (UWorld* World = GetWorld())
 		{
 			Weapon = World->SpawnActor<AWeapon>(WeaponClass);
 			PickWeapon(Weapon);
-			Weapon->SetActorRelativeRotation(FRotator(0.f, 90.f, 0.f));
+			Weapon->SetActorRelativeRotation(FRotator(0.f, 0.f, 0.f));
 		}
 	}
 }
