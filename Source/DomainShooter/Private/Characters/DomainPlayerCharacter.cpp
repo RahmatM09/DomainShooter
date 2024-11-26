@@ -71,6 +71,8 @@ void ADomainPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 	EnhancedInputComponent->BindAction(IA_BaseCharacterJump, ETriggerEvent::Started, this, &ADomainPlayerCharacter::BaseCharacterJump);
 	EnhancedInputComponent->BindAction(IA_PickupWeapon, ETriggerEvent::Started, this, &ADomainPlayerCharacter::PickupWeapon);
 	EnhancedInputComponent->BindAction(IA_Shoot, ETriggerEvent::Started, this, &ADomainPlayerCharacter::CharacterShoot);
+	EnhancedInputComponent->BindAction(IA_CameraZoom, ETriggerEvent::Started, this, &ADomainPlayerCharacter::CameraZoomIn);
+	EnhancedInputComponent->BindAction(IA_CameraZoom, ETriggerEvent::Completed, this, &ADomainPlayerCharacter::CameraZoomOut);
 }
 
 void ADomainPlayerCharacter::BaseCharacterMovement(const FInputActionValue& InputActionValue)
@@ -130,4 +132,16 @@ void ADomainPlayerCharacter::CharacterShoot(const FInputActionValue& InputAction
 		Shoot(Weapon);
 		MakeNoise(5.f, this, GetActorLocation());
 	}
+}
+
+void ADomainPlayerCharacter::CameraZoomIn(const FInputActionValue& InputActionValue)
+{
+	if(bHasRifle)
+		Camera->SetFieldOfView(35.f);
+}
+
+void ADomainPlayerCharacter::CameraZoomOut(const FInputActionValue& InputActionValue)
+{
+	if(bHasRifle)
+		Camera->SetFieldOfView(90.f);
 }

@@ -70,14 +70,17 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> IA_Shoot;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> IA_CameraZoom;
+
 	/// Input Functions ***********************************************
 	void BaseCharacterMovement(const FInputActionValue& InputActionValue);
 	void BaseCharacterLookAround(const FInputActionValue& InputActionValue);
 	void BaseCharacterJump(const FInputActionValue& InputActionValue);
 	void PickupWeapon(const FInputActionValue& InputActionValue);
 	void CharacterShoot(const FInputActionValue& InputActionValue);
-
-
+	void CameraZoomIn(const FInputActionValue& InputActionValue);
+	void CameraZoomOut(const FInputActionValue& InputActionValue);
 
 	// UI *************************************************************
 	UPROPERTY(EditAnywhere, Category = "UI")
