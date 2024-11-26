@@ -53,6 +53,15 @@ void ADomainPlayerCharacter::BeginPlay()
 		Subsystem->AddMappingContext(BaseCharacterIMC, 0);
 	}
 
+	if (Healthbar)
+	{
+		UIHealthbar = CreateWidget<UUserWidget>(GetWorld(), Healthbar);
+		if (UIHealthbar)
+		{
+			UIHealthbar->AddToViewport();
+		}
+	}
+
 }
 
 void ADomainPlayerCharacter::Tick(float DeltaTime)

@@ -88,7 +88,15 @@ private:
 
 	TObjectPtr<UUserWidget> UIWidget;
 
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UUserWidget> Healthbar;
+
+	TObjectPtr<UUserWidget> UIHealthbar;
+
 
 public:
+	// Setters and Getters
+	UFUNCTION(BlueprintPure, Category = "Health")
+	FORCEINLINE float GetHealth() { return CurrentHealth; }
 
 };
