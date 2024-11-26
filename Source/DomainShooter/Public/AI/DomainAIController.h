@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "DomainAIController.generated.h"
 
 /**
@@ -43,6 +44,6 @@ private:
 
 	// Callback functions ************************************************
 	UFUNCTION()
-	void OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors);
+	void OnPerceptionUpdated(const FActorPerceptionUpdateInfo& UpdateInfo);
 
 };

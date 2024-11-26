@@ -25,7 +25,7 @@ ADomainAIController::ADomainAIController()
 	DomainAIPerception->ConfigureSense(*SightSenseConfig);
 	DomainAIPerception->SetDominantSense(SightSenseConfig->GetSenseImplementation());
 
-	DomainAIPerception->OnPerceptionUpdated.AddDynamic(this, &ADomainAIController::OnPerceptionUpdated);
+	DomainAIPerception->OnTargetPerceptionInfoUpdated.AddDynamic(this, &ADomainAIController::OnPerceptionUpdated);
 }
 
 void ADomainAIController::BeginPlay()
@@ -51,23 +51,21 @@ void ADomainAIController::Tick(float DeltaTime)
 	
 }
 
-void ADomainAIController::OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors)
+void ADomainAIController::OnPerceptionUpdated(const FActorPerceptionUpdateInfo& UpdateInfo)
 {
-	for (AActor* Actor : UpdatedActors)
+	AActor* Actor = UpdateInfo.Target.Get();
+	if(Actor && Actor->IsA(ADomainPlayerCharacter::StaticClass()))
 	{
-		if(Actor->IsA(ADomainPlayerCharacter::StaticClass()))
+		if (UpdateInfo.Stimulus.WasSuccessfullySensed())
 		{
-			FActorPerceptionBlueprintInfo PerceptionInfo;
-			DomainAIPerception->GetActorsPerception(Actor, PerceptionInfo);
-			for (const FAIStimulus& Stimulus : PerceptionInfo.LastSensedStimuli)
-			{
-				if (Stimulus.WasSuccessfullySensed())
-				{
-					BB_Domain->SetValueAsVector(TEXT("TargetLocation"), Actor->GetActorLocation());
-					return;
-				}
-			}
+			BB_Domain->SetValueAsVector(TEXT("TargetLocation"), Actor->GetActorLocation());
+			SetFocus(Actor);
+		}
+		else
+		{
+			BB_Domain->ClearValue(TEXT("TargetLocation"));
+			ClearFocus(0);
 		}
 	}
-	BB_Domain->ClearValue(TEXT("TargetLocation"));
+
 }
