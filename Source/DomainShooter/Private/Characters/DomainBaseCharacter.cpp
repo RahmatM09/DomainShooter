@@ -6,6 +6,9 @@
 #include "Components/CapsuleComponent.h"
 #include "DomainShooter/Public/Weapons/Weapon.h"	
 #include "Components/SphereComponent.h"
+#include "AIController.h"
+#include "BrainComponent.h"
+
 
 ADomainBaseCharacter::ADomainBaseCharacter()
 {
@@ -53,6 +56,16 @@ float ADomainBaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& D
 		
 		if (Controller)
 		{
+			if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+			{
+				DisableInput(PlayerController);
+			}
+
+			if (AAIController* AIController = Cast<AAIController>(Controller))
+			{
+				AIController->BrainComponent->StopLogic(TEXT("Character Died"));
+			}
+
 			Controller->SetIgnoreMoveInput(true);
 			Controller->SetIgnoreLookInput(true);
 		}
@@ -89,7 +102,6 @@ void ADomainBaseCharacter::Shoot(AWeapon* WeaponToShoot)
 		}
 		WeaponToShoot->WeaponShoot();
 	}
-	
 }
 
 void ADomainBaseCharacter::DestroyActor()

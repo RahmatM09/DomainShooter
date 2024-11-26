@@ -19,7 +19,6 @@
 #include "Components/PawnNoiseEmitterComponent.h"
 
 
-
 ADomainPlayerCharacter::ADomainPlayerCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
