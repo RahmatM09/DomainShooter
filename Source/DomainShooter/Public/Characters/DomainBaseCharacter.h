@@ -57,6 +57,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsDead = false;
 
+	// Weapon Functions **********************************************
+	void PickWeapon(AWeapon* WeaponToPick);
+
 private:
 	// Death Timer *********************************************************
 	FTimerHandle DeathTimerHandle;

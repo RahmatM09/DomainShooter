@@ -102,10 +102,8 @@ void ADomainPlayerCharacter::PickupWeapon(const FInputActionValue& InputActionVa
 {
 	if (bCanPickup && Weapon)
 	{
-		Weapon->CollisionSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
-		Weapon->SetActorRelativeLocation(FVector(0.f, 0.f, 0.f));
-		Weapon->SetActorRelativeRotation(FRotator(0.0, 0.0, 0.0));
+		PickWeapon(Weapon);
+
 		bHasRifle = true;
 
 		if (CharacterUI)
@@ -116,7 +114,6 @@ void ADomainPlayerCharacter::PickupWeapon(const FInputActionValue& InputActionVa
 				UIWidget->AddToViewport();
 			}
 		}
-		Weapon->SetOwner(this);
 	}
 }
 

@@ -4,6 +4,8 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "DomainShooter/Public/Weapons/Weapon.h"
 #include "Components/CapsuleComponent.h"
+#include "DomainShooter/Public/Weapons/Weapon.h"	
+#include "Components/SphereComponent.h"
 
 ADomainBaseCharacter::ADomainBaseCharacter()
 {
@@ -65,6 +67,15 @@ float ADomainBaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& D
 	}
 
 	return DamageAmount;
+}
+
+void ADomainBaseCharacter::PickWeapon(AWeapon* WeaponToPick)
+{
+	WeaponToPick->CollisionSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	WeaponToPick->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
+	WeaponToPick->SetActorRelativeLocation(FVector(0.f, 0.f, 0.f));
+	WeaponToPick->SetActorRelativeRotation(FRotator(0.0, 0.0, 0.0));
+	WeaponToPick->SetOwner(this);
 }
 
 void ADomainBaseCharacter::DestroyActor()
