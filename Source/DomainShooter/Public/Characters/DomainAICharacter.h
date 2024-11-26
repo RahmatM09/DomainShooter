@@ -18,6 +18,9 @@ class DOMAINSHOOTER_API ADomainAICharacter : public ADomainBaseCharacter
 {
 	GENERATED_BODY()
 	
+public:
+	void ShootTask();
+
 protected:
 	virtual void BeginPlay() override;
 

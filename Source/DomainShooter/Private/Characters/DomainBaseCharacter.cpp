@@ -87,7 +87,7 @@ void ADomainBaseCharacter::Shoot(AWeapon* WeaponToShoot)
 		{
 			AnimInstance->Montage_Play(FireMontage);
 		}
-		Weapon->WeaponShoot();
+		WeaponToShoot->WeaponShoot();
 	}
 	
 }

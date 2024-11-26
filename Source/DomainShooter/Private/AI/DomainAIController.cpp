@@ -59,12 +59,14 @@ void ADomainAIController::OnPerceptionUpdated(const FActorPerceptionUpdateInfo& 
 		if (UpdateInfo.Stimulus.WasSuccessfullySensed())
 		{
 			BB_Domain->SetValueAsVector(TEXT("TargetLocation"), Actor->GetActorLocation());
+			BB_Domain->SetValueAsObject(TEXT("Target"), Actor);
 			SetFocus(Actor);
 		}
 		else
 		{
 			BB_Domain->ClearValue(TEXT("TargetLocation"));
-			ClearFocus(0);
+			BB_Domain->ClearValue(TEXT("Target"));
+			ClearFocus(EAIFocusPriority::Gameplay);
 		}
 	}
 

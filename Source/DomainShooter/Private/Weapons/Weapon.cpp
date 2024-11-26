@@ -93,7 +93,11 @@ void AWeapon::WeaponShoot()
 					SpawnParams.Owner = this;
 					World->SpawnActor<AProjectile>(Projectile, Location, TaragetRotation, SpawnParams);
 				}
-			}		
+			}
+			else
+			{
+				World->SpawnActor<AProjectile>(Projectile, Location, Rotation);
+			}
 		}	
 	}
 }
