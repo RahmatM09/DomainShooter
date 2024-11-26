@@ -15,6 +15,9 @@
 #include "Components/CapsuleComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISense_Sight.h"
+#include "Perception/AISense_Hearing.h"
+#include "Components/PawnNoiseEmitterComponent.h"
+
 
 
 ADomainPlayerCharacter::ADomainPlayerCharacter()
@@ -30,6 +33,10 @@ ADomainPlayerCharacter::ADomainPlayerCharacter()
 
 	StimulusSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSource"));
 	StimulusSource->RegisterForSense(UAISense_Sight::StaticClass());
+
+	NoiseEmitter = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("NoiseEmitter"));
+	StimulusSource->RegisterForSense(UAISense_Hearing::StaticClass());
+
 	StimulusSource->RegisterWithPerceptionSystem();
 
 }
@@ -122,5 +129,6 @@ void ADomainPlayerCharacter::CharacterShoot(const FInputActionValue& InputAction
 	if (Weapon && bHasRifle)
 	{
 		Shoot(Weapon);
+		MakeNoise(5.f, this, GetActorLocation());
 	}
 }

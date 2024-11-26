@@ -15,6 +15,8 @@ class UBehaviorTree;
 class UBlackboardComponent;
 class UAIPerceptionComponent;
 class UAISenseConfig_Sight;
+class UAISenseConfig_Hearing;
+
 
 UCLASS()
 class DOMAINSHOOTER_API ADomainAIController : public AAIController
@@ -30,6 +32,7 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	// AI | Perception *******************************************************
 	UPROPERTY(EditAnywhere, Category = "AI")
 	TObjectPtr<UBehaviorTree> BT_DomianAI;
 
@@ -41,6 +44,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "AI|Perception")
 	TObjectPtr<UAISenseConfig_Sight> SightSenseConfig;
+
+	UPROPERTY(VisibleAnywhere, Category = "AI|Perception")
+	TObjectPtr<UAISenseConfig_Hearing> HearingSenseConfig;
 
 	// Callback functions ************************************************
 	UFUNCTION()

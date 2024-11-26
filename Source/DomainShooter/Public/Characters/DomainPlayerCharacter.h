@@ -15,6 +15,7 @@ class UCameraComponent;
 class AWeapon;
 class UUserWidget;
 class UAIPerceptionStimuliSourceComponent;
+class UPawnNoiseEmitterComponent;
 
 /**
  * 
@@ -46,6 +47,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "AI")
 	TObjectPtr <UAIPerceptionStimuliSourceComponent> StimulusSource;
+
+	UPROPERTY(VisibleAnywhere, Category = "AI")
+	TObjectPtr<UPawnNoiseEmitterComponent> NoiseEmitter;
 
 	/// Input ********************************************************
 	UPROPERTY(EditAnywhere, Category = "Input")

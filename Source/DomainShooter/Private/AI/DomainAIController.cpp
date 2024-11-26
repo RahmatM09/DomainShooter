@@ -8,6 +8,7 @@
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "DomainShooter/Public/Characters/DomainPlayerCharacter.h"
+#include "Perception/AISenseConfig_Hearing.h"
 
 ADomainAIController::ADomainAIController()
 {
@@ -22,9 +23,15 @@ ADomainAIController::ADomainAIController()
 	SightSenseConfig->DetectionByAffiliation.bDetectFriendlies = true;
 	SightSenseConfig->DetectionByAffiliation.bDetectNeutrals = true;
 
+	HearingSenseConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("HeaingSense"));
+	HearingSenseConfig->HearingRange = 3000.f;
+	HearingSenseConfig->DetectionByAffiliation.bDetectEnemies = true;
+	HearingSenseConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	HearingSenseConfig->DetectionByAffiliation.bDetectNeutrals = true;
+
+	DomainAIPerception->ConfigureSense(*HearingSenseConfig);
 	DomainAIPerception->ConfigureSense(*SightSenseConfig);
 	DomainAIPerception->SetDominantSense(SightSenseConfig->GetSenseImplementation());
-
 	DomainAIPerception->OnTargetPerceptionInfoUpdated.AddDynamic(this, &ADomainAIController::OnPerceptionUpdated);
 }
 
@@ -58,6 +65,10 @@ void ADomainAIController::OnPerceptionUpdated(const FActorPerceptionUpdateInfo& 
 	{
 		if (UpdateInfo.Stimulus.WasSuccessfullySensed())
 		{
+			if (UpdateInfo.Stimulus.Type.Name == "Hearing")
+			{
+				BB_Domain->SetValueAsVector(TEXT("HearingLocation"), UpdateInfo.Stimulus.StimulusLocation);
+			}
 			BB_Domain->SetValueAsVector(TEXT("TargetLocation"), Actor->GetActorLocation());
 			BB_Domain->SetValueAsObject(TEXT("Target"), Actor);
 			SetFocus(Actor);
@@ -66,8 +77,8 @@ void ADomainAIController::OnPerceptionUpdated(const FActorPerceptionUpdateInfo& 
 		{
 			BB_Domain->ClearValue(TEXT("TargetLocation"));
 			BB_Domain->ClearValue(TEXT("Target"));
+			BB_Domain->ClearValue(TEXT("HearingLocation"));
 			ClearFocus(EAIFocusPriority::Gameplay);
 		}
 	}
-
 }
