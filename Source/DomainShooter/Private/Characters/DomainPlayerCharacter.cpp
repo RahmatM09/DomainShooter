@@ -13,6 +13,9 @@
 #include "Components/SphereComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/CapsuleComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
+
 
 ADomainPlayerCharacter::ADomainPlayerCharacter()
 {
@@ -24,6 +27,10 @@ ADomainPlayerCharacter::ADomainPlayerCharacter()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(BaseSpringArm);
+
+	StimulusSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("AIPerceptionStimuliSource"));
+	StimulusSource->RegisterForSense(UAISense_Sight::StaticClass());
+	StimulusSource->RegisterWithPerceptionSystem();
 
 }
 

@@ -14,6 +14,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class AWeapon;
 class UUserWidget;
+class UAIPerceptionStimuliSourceComponent;
 
 /**
  * 
@@ -42,6 +43,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
 	TObjectPtr<UCameraComponent> Camera;
+
+	UPROPERTY(VisibleAnywhere, Category = "AI")
+	TObjectPtr <UAIPerceptionStimuliSourceComponent> StimulusSource;
 
 	/// Input ********************************************************
 	UPROPERTY(EditAnywhere, Category = "Input")
